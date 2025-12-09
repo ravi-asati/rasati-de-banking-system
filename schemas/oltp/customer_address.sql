@@ -57,3 +57,8 @@ CREATE INDEX IF NOT EXISTS idx_custaddr_primary
 -- Useful for regional queries / data quality checks
 CREATE INDEX IF NOT EXISTS idx_custaddr_city_state
     ON customer_address (city, state);
+
+-- This will guarantee each customer has at most one primary address.
+CREATE UNIQUE INDEX ux_customer_primary_address
+ON customer_address (customer_id)
+WHERE is_primary = TRUE;
